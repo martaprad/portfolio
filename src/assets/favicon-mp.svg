@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- Fondo -->
+  <circle cx="32" cy="32" r="30" fill="#272F29"/>
+
+  <!-- Letras -->
+  <text x="32" y="40"
+        text-anchor="middle"
+        font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif"
+        font-size="24"
+        font-weight="800"
+        fill="#E6E2DA"
+        letter-spacing="1">MP</text>
+
+  <!-- Acento naranja -->
+  <circle cx="48" cy="18" r="4" fill="#F59D15"/>
+</svg>

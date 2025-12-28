@@ -1,0 +1,229 @@
+<div class="page" id="top">
+  <a class="back-top" href="#top">Volver arriba</a>
+
+  <div class="parallax" aria-hidden="true">
+    <div class="layer layer-1"></div>
+    <div class="layer layer-2"></div>
+    <div class="layer layer-3"></div>
+  </div>
+
+  <section id="hero" #heroSection class="section section-hero">
+    <div class="section-inner hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Portfolio personal</p>
+        <h1 class="hero-title">{{ profile.name }}</h1>
+        <p class="hero-role">{{ profile.role }}</p>
+        <p class="hero-intro">{{ profile.tagline }}</p>
+        <div class="hero-cta">
+          <a class="btn primary" href="#projects">Ver proyectos</a>
+          <a class="btn ghost" href="#contact">Contactar</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-orb" aria-hidden="true"></div>
+        <div class="hero-card-inner reveal">
+          <p class="card-label">Perfil profesional</p>
+          <div class="hero-metrics">
+            <div>
+              <span class="metric-value">Madrid</span>
+              <span class="metric-label">Ubicacion</span>
+            </div>
+            <div>
+              <span class="metric-value">Español</span>
+              <span class="metric-label">Nativo</span>
+            </div>
+            <div>
+              <span class="metric-value">Inglés</span>
+              <span class="metric-label">B2</span>
+            </div>
+          </div>
+          <div class="hero-badges">
+            <span class="badge">Consultoría</span>
+            <span class="badge">Datos</span>
+            <span class="badge">Full stack</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">
+      <span></span>
+      <span></span>
+    </div>
+  </section>
+
+  <section id="about" #aboutSection class="section section-about">
+    <div class="section-inner">
+      <div class="section-heading">
+        <p class="eyebrow">Sobre mi</p>
+        <h2>Consultoría, datos y desarrollo web</h2>
+        <p class="section-lead">
+          Experiencia en requisitos, análisis y entrega técnica con foco en cliente.
+        </p>
+      </div>
+      <div class="about-grid">
+        @for (item of aboutBullets; track item.title) {
+          <article class="about-card reveal">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.copy }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" #skillsSection class="section section-skills">
+    <div class="section-inner">
+      <div class="section-heading">
+        <p class="eyebrow">Skills</p>
+        <h2>Tecnologias principales</h2>
+        <p class="section-lead">
+          Herramientas de frontend, backend y data usadas en proyectos reales.
+        </p>
+      </div>
+      <div class="chip-grid">
+        @for (skill of skills; track skill) {
+          <span class="chip">{{ skill }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" #projectsSection class="section section-projects">
+    <div class="section-inner projects-grid">
+      <div class="projects-copy">
+        <p class="eyebrow">Proyectos</p>
+        <h2>Repositorios reales en GitHub</h2>
+        <p class="section-lead">
+          Navega entre mis proyectos con el carrusel y revisa detalles reales.
+        </p>
+        <div class="project-list">
+          @if (projectsLoading) {
+            <p class="muted">Cargando repositorios de GitHub...</p>
+          } @else if (projectsError) {
+            <p class="muted">No se pudieron cargar los repos. Puedes verlos en GitHub.</p>
+          } @else if (projects.length === 0) {
+            <p class="muted">No hay repos públicos para mostrar.</p>
+          } @else {
+            @for (project of projects; track project.url) {
+              <article class="project-card reveal">
+                <div class="project-top">
+                  <h3>
+                    <a [href]="project.url" target="_blank" rel="noopener">{{ project.title }}</a>
+                  </h3>
+                </div>
+                @if (project.description) {
+                  <p>{{ project.description }}</p>
+                } @else {
+                  <p class="muted">Sin descripción disponible.</p>
+                }
+                @if (project.tags.length) {
+                  <div class="tag-row">
+                    @for (tag of project.tags; track tag) {
+                      <span class="tag">{{ tag }}</span>
+                    }
+                  </div>
+                }
+              </article>
+            }
+          }
+        </div>
+        <a class="btn ghost" href="https://github.com/martaprad?tab=repositories" target="_blank" rel="noopener">
+          Ver todos en GitHub
+        </a>
+      </div>
+      <div class="projects-orbit">
+        <div class="orbit-frame">
+          <button class="orbit-nav left" type="button" (click)="previousProject()" aria-label="Proyecto anterior">
+            <span aria-hidden="true">&larr;</span>
+          </button>
+          <div class="orbit-stage">
+            @if (projectsLoading) {
+              <div class="orbit-empty">Cargando...</div>
+            } @else if (projectsError) {
+              <div class="orbit-empty">No se pudieron cargar los repos.</div>
+            } @else if (projects.length === 0) {
+              <div class="orbit-empty">No hay repos publicos.</div>
+            } @else {
+              @for (project of projects; let i = $index; track project.url) {
+                <article
+                  class="orbit-card"
+                  [ngStyle]="getOrbitStyle(i)"
+                  [class.is-active]="i === activeProjectIndex"
+                  [attr.aria-hidden]="i !== activeProjectIndex"
+                  (click)="setActiveProject(i)"
+                >
+                  <h3>{{ project.title }}</h3>
+                  @if (project.description) {
+                    <p>{{ project.description }}</p>
+                  } @else {
+                    <p class="muted">Sin descripción disponible.</p>
+                  }
+                  @if (project.tags.length) {
+                    <div class="tag-row">
+                      @for (tag of project.tags; track tag) {
+                        <span class="tag">{{ tag }}</span>
+                      }
+                    </div>
+                  }
+                  <a class="orbit-link" [href]="project.url" target="_blank" rel="noopener">Ver repo</a>
+                </article>
+              }
+            }
+          </div>
+          <button class="orbit-nav right" type="button" (click)="nextProject()" aria-label="Proyecto siguiente">
+            <span aria-hidden="true">&rarr;</span>
+          </button>
+          <div class="orbit-glow" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" #experienceSection class="section section-experience">
+    <div class="section-inner">
+      <div class="section-heading">
+        <p class="eyebrow">Experiencia</p>
+        <h2>Experiencia profesional</h2>
+        <p class="section-lead">
+          Consultoría, data y operaciones con equipos y clientes.
+        </p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-line" aria-hidden="true"></div>
+        @for (item of experiences; track item.role) {
+          <div class="timeline-item reveal">
+            <div class="timeline-meta">
+              <span class="timeline-period">{{ item.period }}</span>
+              <span class="timeline-company">{{ item.company }}</span>
+            </div>
+            <div class="timeline-content">
+              <h3>{{ item.role }}</h3>
+              <p>{{ item.summary }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" #contactSection class="section section-contact">
+    <div class="section-inner contact-grid">
+      <div class="contact-copy">
+        <p class="eyebrow">Contacto</p>
+        <h2>Hablemos de oportunidades reales</h2>
+        <p class="section-lead">
+          Puedes contactarme por email o LinkedIn.
+        </p>
+        <a class="btn primary" href="mailto:martapradi@gmail.com">Escríbeme</a>
+      </div>
+      <div class="contact-links">
+        @for (link of contactLinks; track link.label) {
+          <a class="contact-link reveal" [href]="link.href" target="_blank" rel="noopener">
+            <span>{{ link.label }}</span>
+            <span class="contact-value">{{ link.value }}</span>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+</div>
