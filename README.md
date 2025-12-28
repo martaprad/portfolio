@@ -28,6 +28,9 @@ Portfolio personal interactivo construido con **Angular** en formato “scroll s
 - SCSS
 - (Pendiente / opcional) Animaciones scroll-driven con GSAP/ScrollTrigger
 
+## Licencia y contenido
+El codigo del repositorio se publica bajo licencia MIT. El contenido (textos, diseno e imagenes) pertenece a Marta Pradillo Rodriguez y no debe reutilizarse sin permiso.
+
 ## Ejecutar en local
 ```bash
 npm install
