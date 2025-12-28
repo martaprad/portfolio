@@ -1,59 +1,45 @@
-# Portfolio
+# Portfolio | Marta Pradillo Rodríguez
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.4.
+Portfolio personal interactivo construido con **Angular** en formato “scroll story”: la pantalla se organiza por secciones (hero, sobre mí, skills, proyectos, experiencia y contacto) y el usuario navega haciendo scroll mientras los elementos van apareciendo en escena.
 
-## Development server
+## Demo
+- 🌐 Live (GitHub Pages): https://martaprad.github.io/portfolio/  <!-- ajusta si tu URL final cambia -->
+- 👩‍💼 LinkedIn: https://linkedin.com/in/marta-pradillo
+- 📬 Email: martapradi@gmail.com
 
-To start a local development server, run:
+## Qué incluye
+- Layout por secciones con navegación por anclas (hero → projects → contact).  
+- Fondo tipo **parallax** con varias capas para dar profundidad.  
+- Botón “**Volver arriba**” siempre disponible.  
+- Sección **Proyectos** que carga repos públicos de GitHub y los muestra:
+  - en lista (con título, descripción y tags)
+  - y en un carrusel/“órbita” con flechas izquierda/derecha para rotar entre proyectos.
 
+## Secciones
+- Hero (presentación + CTAs)
+- Sobre mí
+- Skills (chips)
+- Proyectos (lista + órbita)
+- Experiencia (timeline)
+- Contacto
+
+## Tech Stack
+- Angular + TypeScript
+- SCSS
+- (Pendiente / opcional) Animaciones scroll-driven con GSAP/ScrollTrigger
+
+## Ejecutar en local
 ```bash
-ng serve
+npm install
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Abre http://localhost:4200/
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+## Build
 ```bash
-ng generate component component-name
+npm run build
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Deploy a GitHub Pages (notas importantes)
+Este proyecto se publica en GitHub Pages, por lo que el base href debe apuntar al nombre del repositorio.
