@@ -1,48 +1,66 @@
-# Portfolio | Marta Pradillo Rodríguez
+# Portfolio Profesional | Marta Pradillo Rodríguez
 
-Portfolio personal interactivo construido con **Angular** en formato “scroll story”: la pantalla se organiza por secciones (hero, sobre mí, skills, proyectos, experiencia y contacto) y el usuario navega haciendo scroll mientras los elementos van apareciendo en escena.
+Portfolio personal interactivo y de alto rendimiento construido con **Angular 21** y **TypeScript**. Diseñado con una arquitectura moderna, reactividad basada en **Signals**, separación clara de datos y componentes, y un posicionamiento enfocado en **Full Stack Developer** (Frontend reactivo, Backend con FastAPI, datos en SQL Azure/Databricks y liderazgo de equipos).
 
-## Demo
-- 🌐 Live (GitHub Pages): https://martaprad.github.io/portfolio/  <!-- ajusta si tu URL final cambia -->
-- 👩‍💼 LinkedIn: https://linkedin.com/in/marta-pradillo
-- 📬 Email: martapradi@gmail.com
+## Enlaces & Contacto
+- 🌐 **Live Demo (GitHub Pages)**: https://martaprad.github.io/portfolio/
+- 👩‍💼 **LinkedIn**: https://linkedin.com/in/marta-pradillo
+- 💻 **GitHub**: https://github.com/martaprad
+- 📬 **Email**: martapradi@gmail.com
 
-## Qué incluye
-- Layout por secciones con navegación por anclas (hero → projects → contact).  
-- Fondo tipo **parallax** con varias capas para dar profundidad.  
-- Botón “**Volver arriba**” siempre disponible.  
-- Sección **Proyectos** que carga repos públicos de GitHub y los muestra:
-  - en lista (con título, descripción y tags)
-  - y en un carrusel/“órbita” con flechas izquierda/derecha para rotar entre proyectos.
+---
 
-## Secciones
-- Hero (presentación + CTAs)
-- Sobre mí
-- Skills (chips)
-- Proyectos (lista + órbita)
-- Experiencia (timeline)
-- Contacto
+## Características Principales
+
+1. **Posicionamiento Full Stack de Alto Impacto**:
+   - Propuesta de valor clara combinando Frontend (Angular, PrimeNG, Tailwind), Backend (Python, FastAPI, SQLAlchemy), Persistencia/Cloud (SQL Azure, Databricks) y Habilidades de Liderazgo (coordinación de 15 personas).
+   - Proyectos destacados con desglose arquitectónico (Frontend vs. Backend & Datos).
+
+2. **Arquitectura y Código Simplificado**:
+   - **Angular Signals**: Gestión reactiva de estados (pestañas de habilidades, filtros de proyectos, feedback de copia).
+   - **Centralización de Datos**: Toda la información y textos residen en [`src/app/data/portfolio-data.ts`](file:///c:/Users/Marta/Proyectos/portfolio/src/app/data/portfolio-data.ts), facilitando su mantenimiento y actualización sin tocar lógica de componentes.
+   - **Scroll Natural & Accesible**: Eliminación de bloqueos de scroll artificiales (scroll-jacking) en favor de un scroll nativo fluido y animaciones de aparición ligeras con `IntersectionObserver`.
+   - **Reducción del Bundle**: Reducción de ~40% en el tamaño del bundle JavaScript inicial (de ~264 kB a ~165 kB).
+
+3. **Integración con GitHub API**:
+   - Carga dinámica y asíncrona de los repositorios públicos de GitHub con filtrado para descartar configuraciones internas y mostrar etiquetas por lenguaje.
+
+---
 
 ## Tech Stack
-- Angular + TypeScript
-- SCSS
-- (Pendiente / opcional) Animaciones scroll-driven con GSAP/ScrollTrigger
 
-## Licencia y contenido
-El codigo del repositorio se publica bajo licencia MIT. El contenido (textos, diseno e imagenes) pertenece a Marta Pradillo Rodriguez y no debe reutilizarse sin permiso.
+- **Framework**: Angular 21 (Standalone Components, Signals, New Control Flow `@if` / `@for`)
+- **Lenguaje**: TypeScript 5.9
+- **Estilos**: SCSS modular con variables CSS, soporte para tema oscuro refinado y diseño 100% responsive
+- **Testing**: Vitest + Angular TestBed
 
-## Ejecutar en local
+---
+
+## Ejecución en Local
+
 ```bash
+# Instalar dependencias
 npm install
+
+# Iniciar servidor de desarrollo
 npm start
 ```
 
-Abre http://localhost:4200/
+Navega a `http://localhost:4200/`
 
-## Build
+---
+
+## Testing & Build
+
 ```bash
+# Ejecutar tests unitarios
+npm test -- --run
+
+# Generar build de producción
 npm run build
 ```
 
-## Deploy a GitHub Pages (notas importantes)
-Este proyecto se publica en GitHub Pages, por lo que el base href debe apuntar al nombre del repositorio.
+---
+
+## Licencia
+El código se distribuye bajo licencia MIT. Los textos e imágenes personales pertenecen a Marta Pradillo Rodríguez.
