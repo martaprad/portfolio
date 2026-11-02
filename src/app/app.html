@@ -1,229 +1,603 @@
 <div class="page" id="top">
-  <a class="back-top" href="#top">Volver arriba</a>
+  <!-- Navegación Superior -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#top" class="nav-brand">
+        <span class="brand-symbol">&lt;/&gt;</span>
+        <span class="brand-text">Marta Pradillo</span>
+        <span class="brand-tag">Full Stack</span>
+      </a>
 
-  <div class="parallax" aria-hidden="true">
-    <div class="layer layer-1"></div>
-    <div class="layer layer-2"></div>
-    <div class="layer layer-3"></div>
+      <nav class="nav-links" [class.is-open]="mobileNavOpen()">
+        <a href="#about" (click)="closeMobileNav()">Sobre mí</a>
+        <a href="#skills" (click)="closeMobileNav()">Stack Técnico</a>
+        <a href="#projects" (click)="closeMobileNav()">Proyectos</a>
+        <a href="#experience" (click)="closeMobileNav()">Experiencia</a>
+        <a href="#education" (click)="closeMobileNav()">Formación</a>
+        <a href="#contact" class="nav-cta" (click)="closeMobileNav()">Contactar</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Pestaña / Botón de Traducción en Tiempo Real -->
+        <button
+          type="button"
+          class="lang-btn notranslate"
+          (click)="toggleLanguage()"
+          [attr.title]="currentLang() === 'es' ? 'Traducir página completa al inglés en tiempo real' : 'Traducir al español'"
+          [attr.aria-label]="currentLang() === 'es' ? 'Traducir página completa al inglés' : 'Traducir página al español'"
+        >
+          @if (currentLang() === 'es') {
+            <!-- Bandera de Inglaterra / Reino Unido -->
+            <svg class="flag-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="22" height="13" aria-hidden="true">
+              <clipPath id="uk-clip"><path d="M0,0 v30 h60 v-30 z"/></clipPath>
+              <clipPath id="uk-diag"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+              <g clip-path="url(#uk-clip)">
+                <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+                <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/>
+                <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#uk-diag)" stroke="#C8102E" stroke-width="4"/>
+                <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+                <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+              </g>
+            </svg>
+            <span class="lang-label">English</span>
+          } @else {
+            <!-- Bandera de España para retornar a español -->
+            <svg class="flag-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 500" width="22" height="14" aria-hidden="true">
+              <rect width="750" height="500" fill="#c60b1e"/>
+              <rect width="750" height="250" y="125" fill="#ffc400"/>
+            </svg>
+            <span class="lang-label">Español</span>
+          }
+        </button>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          (click)="toggleMobileNav()"
+          [attr.aria-expanded]="mobileNavOpen()"
+          aria-label="Abrir menú de navegación"
+        >
+          <span class="toggle-bar"></span>
+          <span class="toggle-bar"></span>
+          <span class="toggle-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Efecto de Fondo Sutil -->
+  <div class="ambient-glow" aria-hidden="true">
+    <div class="glow-orb glow-top-left"></div>
+    <div class="glow-orb glow-bottom-right"></div>
+    <div class="glow-grid"></div>
   </div>
 
-  <section id="hero" #heroSection class="section section-hero">
-    <div class="section-inner hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow">Portfolio personal</p>
-        <h1 class="hero-title">{{ profile.name }}</h1>
-        <p class="hero-role">{{ profile.role }}</p>
-        <p class="hero-intro">{{ profile.tagline }}</p>
-        <div class="hero-cta">
-          <a class="btn primary" href="#projects">Ver proyectos</a>
-          <a class="btn ghost" href="#contact">Contactar</a>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="hero-orb" aria-hidden="true"></div>
-        <div class="hero-card-inner reveal">
-          <p class="card-label">Perfil profesional</p>
-          <div class="hero-metrics">
-            <div>
-              <span class="metric-value">Madrid</span>
-              <span class="metric-label">Ubicacion</span>
-            </div>
-            <div>
-              <span class="metric-value">Español</span>
-              <span class="metric-label">Nativo</span>
-            </div>
-            <div>
-              <span class="metric-value">Inglés</span>
-              <span class="metric-label">B2</span>
-            </div>
+  <main>
+    <!-- HERO SECTION -->
+    <section id="hero" class="section section-hero">
+      <div class="section-inner hero-grid">
+        <div class="hero-content reveal">
+          <div class="hero-status-pill">
+            <span class="status-dot"></span>
+            <span>{{ profile.availability }}</span>
           </div>
-          <div class="hero-badges">
-            <span class="badge">Consultoría</span>
-            <span class="badge">Datos</span>
-            <span class="badge">Full stack</span>
+
+          <h1 class="hero-title">
+            {{ profile.name }}
+          </h1>
+
+          <div class="hero-role-wrapper">
+            <span class="hero-role">{{ profile.role }}</span>
+            <span class="hero-role-sep">•</span>
+            <span class="hero-role-badge">{{ profile.badge }}</span>
+          </div>
+
+          <p class="hero-tagline">
+            {{ profile.tagline }}
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">
+              <span>Explorar Proyectos</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a class="btn btn-secondary" href="#contact">
+              <span>Hablemos</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-ghost copy-btn"
+              (click)="copyEmail('martapradi@gmail.com')"
+              title="Copiar email al portapapeles"
+            >
+              <span>{{ emailCopied() ? '✓ ¡Email copiado!' : 'Copiar email' }}</span>
+            </button>
+          </div>
+
+          <div class="hero-social-strip">
+            <a href="https://github.com/martaprad" target="_blank" rel="noopener noreferrer" class="social-chip">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+              <span>GitHub</span>
+            </a>
+            <a href="https://www.linkedin.com/in/marta-pradillo" target="_blank" rel="noopener noreferrer" class="social-chip">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              <span>LinkedIn</span>
+            </a>
+            <span class="location-chip">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>{{ profile.location }}</span>
+            </span>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="scroll-hint" aria-hidden="true">
-      <span></span>
-      <span></span>
-    </div>
-  </section>
 
-  <section id="about" #aboutSection class="section section-about">
-    <div class="section-inner">
-      <div class="section-heading">
-        <p class="eyebrow">Sobre mi</p>
-        <h2>Consultoría, datos y desarrollo web</h2>
-        <p class="section-lead">
-          Experiencia en requisitos, análisis y entrega técnica con foco en cliente.
-        </p>
-      </div>
-      <div class="about-grid">
-        @for (item of aboutBullets; track item.title) {
-          <article class="about-card reveal">
-            <h3>{{ item.title }}</h3>
-            <p>{{ item.copy }}</p>
-          </article>
-        }
-      </div>
-    </div>
-  </section>
+        <div class="hero-sidebar reveal">
+          <div class="profile-card">
+            <div class="card-glow" aria-hidden="true"></div>
+            <div class="profile-card-header">
+              <span class="card-eyebrow">PROPUESTA DE VALOR</span>
+              <h3>Perfil Integral</h3>
+            </div>
 
-  <section id="skills" #skillsSection class="section section-skills">
-    <div class="section-inner">
-      <div class="section-heading">
-        <p class="eyebrow">Skills</p>
-        <h2>Tecnologias principales</h2>
-        <p class="section-lead">
-          Herramientas de frontend, backend y data usadas en proyectos reales.
-        </p>
-      </div>
-      <div class="chip-grid">
-        @for (skill of skills; track skill) {
-          <span class="chip">{{ skill }}</span>
-        }
-      </div>
-    </div>
-  </section>
-
-  <section id="projects" #projectsSection class="section section-projects">
-    <div class="section-inner projects-grid">
-      <div class="projects-copy">
-        <p class="eyebrow">Proyectos</p>
-        <h2>Repositorios reales en GitHub</h2>
-        <p class="section-lead">
-          Navega entre mis proyectos con el carrusel y revisa detalles reales.
-        </p>
-        <div class="project-list">
-          @if (projectsLoading) {
-            <p class="muted">Cargando repositorios de GitHub...</p>
-          } @else if (projectsError) {
-            <p class="muted">No se pudieron cargar los repos. Puedes verlos en GitHub.</p>
-          } @else if (projects.length === 0) {
-            <p class="muted">No hay repos públicos para mostrar.</p>
-          } @else {
-            @for (project of projects; track project.url) {
-              <article class="project-card reveal">
-                <div class="project-top">
-                  <h3>
-                    <a [href]="project.url" target="_blank" rel="noopener">{{ project.title }}</a>
-                  </h3>
+            <div class="metrics-grid">
+              @for (metric of profile.metrics; track metric.label) {
+                <div class="metric-card">
+                  <span class="metric-val">{{ metric.value }}</span>
+                  <span class="metric-lbl">{{ metric.label }}</span>
+                  <span class="metric-det">{{ metric.detail }}</span>
                 </div>
-                @if (project.description) {
-                  <p>{{ project.description }}</p>
+              }
+            </div>
+
+            <div class="languages-box">
+              <span class="lang-title">Idiomas</span>
+              <div class="lang-pills">
+                @for (lang of profile.languages; track lang.name) {
+                  <span class="lang-pill">
+                    <strong>{{ lang.name }}:</strong> {{ lang.level }}
+                  </span>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PILARES DE VALOR / SOBRE MÍ -->
+    <section id="about" class="section section-about">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <span class="eyebrow">Sobre mí & Enfoque</span>
+          <h2>Por qué un perfil Full Stack con visión de negocio marca la diferencia</h2>
+          <p class="section-lead">
+            No solo escribo código: comprendo el impacto en negocio, lidero equipos y construyo soluciones completas desde el frontend hasta la persistencia y la nube.
+          </p>
+        </div>
+
+        <div class="pillars-grid">
+          @for (pillar of valuePillars; track pillar.title) {
+            <article class="pillar-card reveal">
+              <div class="pillar-icon">
+                @if (pillar.icon === 'layers') {
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                } @else if (pillar.icon === 'database') {
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
                 } @else {
-                  <p class="muted">Sin descripción disponible.</p>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 }
-                @if (project.tags.length) {
-                  <div class="tag-row">
-                    @for (tag of project.tags; track tag) {
-                      <span class="tag">{{ tag }}</span>
-                    }
-                  </div>
-                }
-              </article>
-            }
+              </div>
+              <h3>{{ pillar.title }}</h3>
+              <p>{{ pillar.description }}</p>
+            </article>
           }
         </div>
-        <a class="btn ghost" href="https://github.com/martaprad?tab=repositories" target="_blank" rel="noopener">
-          Ver todos en GitHub
-        </a>
       </div>
-      <div class="projects-orbit">
-        <div class="orbit-frame">
-          <button class="orbit-nav left" type="button" (click)="previousProject()" aria-label="Proyecto anterior">
-            <span aria-hidden="true">&larr;</span>
-          </button>
-          <div class="orbit-stage">
-            @if (projectsLoading) {
-              <div class="orbit-empty">Cargando...</div>
-            } @else if (projectsError) {
-              <div class="orbit-empty">No se pudieron cargar los repos.</div>
-            } @else if (projects.length === 0) {
-              <div class="orbit-empty">No hay repos publicos.</div>
-            } @else {
-              @for (project of projects; let i = $index; track project.url) {
-                <article
-                  class="orbit-card"
-                  [ngStyle]="getOrbitStyle(i)"
-                  [class.is-active]="i === activeProjectIndex"
-                  [attr.aria-hidden]="i !== activeProjectIndex"
-                  (click)="setActiveProject(i)"
-                >
-                  <h3>{{ project.title }}</h3>
-                  @if (project.description) {
-                    <p>{{ project.description }}</p>
-                  } @else {
-                    <p class="muted">Sin descripción disponible.</p>
-                  }
-                  @if (project.tags.length) {
-                    <div class="tag-row">
-                      @for (tag of project.tags; track tag) {
-                        <span class="tag">{{ tag }}</span>
-                      }
-                    </div>
-                  }
-                  <a class="orbit-link" [href]="project.url" target="_blank" rel="noopener">Ver repo</a>
-                </article>
-              }
+    </section>
+
+    <!-- STACK TÉCNICO ORGANIZADO -->
+    <section id="skills" class="section section-skills">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <span class="eyebrow">Stack Tecnológico</span>
+          <h2>Especialización Full Stack & Herramientas</h2>
+          <p class="section-lead">
+            Selección categorizada de herramientas aplicadas en proyectos reales de desarrollo y consultoría.
+          </p>
+        </div>
+
+        <div class="skills-wrapper reveal">
+          <!-- Categorías como Pestañas Interactivas -->
+          <div class="skill-tabs" role="tablist">
+            @for (cat of skillCategories; track cat.id) {
+              <button
+                type="button"
+                role="tab"
+                class="skill-tab-btn"
+                [class.is-active]="activeSkillCategory() === cat.id"
+                [attr.aria-selected]="activeSkillCategory() === cat.id"
+                (click)="setSkillCategory(cat.id)"
+              >
+                <span class="tab-name">{{ cat.name }}</span>
+                <span class="tab-tag">{{ cat.tag }}</span>
+              </button>
             }
           </div>
-          <button class="orbit-nav right" type="button" (click)="nextProject()" aria-label="Proyecto siguiente">
-            <span aria-hidden="true">&rarr;</span>
-          </button>
-          <div class="orbit-glow" aria-hidden="true"></div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <section id="experience" #experienceSection class="section section-experience">
-    <div class="section-inner">
-      <div class="section-heading">
-        <p class="eyebrow">Experiencia</p>
-        <h2>Experiencia profesional</h2>
-        <p class="section-lead">
-          Consultoría, data y operaciones con equipos y clientes.
-        </p>
-      </div>
-      <div class="timeline">
-        <div class="timeline-line" aria-hidden="true"></div>
-        @for (item of experiences; track item.role) {
-          <div class="timeline-item reveal">
-            <div class="timeline-meta">
-              <span class="timeline-period">{{ item.period }}</span>
-              <span class="timeline-company">{{ item.company }}</span>
+          <!-- Detalle de la Categoría Seleccionada -->
+          <div class="skill-detail-panel" role="tabpanel">
+            <div class="category-meta">
+              <h3>{{ currentSkillCategory().name }}</h3>
+              <p class="category-desc">{{ currentSkillCategory().description }}</p>
             </div>
-            <div class="timeline-content">
-              <h3>{{ item.role }}</h3>
-              <p>{{ item.summary }}</p>
+
+            <div class="chips-container">
+              @for (skill of currentSkillCategory().skills; track skill) {
+                <span class="skill-chip">
+                  <span class="chip-dot"></span>
+                  {{ skill }}
+                </span>
+              }
             </div>
           </div>
-        }
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="contact" #contactSection class="section section-contact">
-    <div class="section-inner contact-grid">
-      <div class="contact-copy">
-        <p class="eyebrow">Contacto</p>
-        <h2>Hablemos de oportunidades reales</h2>
-        <p class="section-lead">
-          Puedes contactarme por email o LinkedIn.
-        </p>
-        <a class="btn primary" href="mailto:martapradi@gmail.com">Escríbeme</a>
+    <!-- PROYECTOS PRINCIPALES (TÉCNICOS) -->
+    <section id="projects" class="section section-projects">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="header-split">
+            <div>
+              <span class="eyebrow">Portafolio</span>
+              <h2>Proyectos Técnicos & Full Stack</h2>
+              <p class="section-lead">
+                Proyectos reales con código disponible, arquitecturas cliente-servidor, separación de responsabilidades y buenas prácticas.
+              </p>
+            </div>
+
+            <div class="project-filters">
+              <button
+                type="button"
+                class="filter-btn"
+                [class.is-active]="projectFilter() === 'all'"
+                (click)="setProjectFilter('all')"
+              >
+                Todos
+              </button>
+              <button
+                type="button"
+                class="filter-btn"
+                [class.is-active]="projectFilter() === 'full stack'"
+                (click)="setProjectFilter('full stack')"
+              >
+                Full Stack
+              </button>
+              <button
+                type="button"
+                class="filter-btn"
+                [class.is-active]="projectFilter() === 'frontend'"
+                (click)="setProjectFilter('frontend')"
+              >
+                Frontend
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid de Proyectos Principales -->
+        <div class="projects-showcase">
+          @for (project of filteredProjects(); track project.id) {
+            <article class="featured-card">
+              <div class="card-top-row">
+                <span class="project-badge">{{ project.badge }}</span>
+                <span class="project-status">{{ project.status }}</span>
+              </div>
+
+              <h3 class="project-card-title">{{ project.title }}</h3>
+              <p class="project-card-desc">{{ project.description }}</p>
+
+              <div class="solution-box">
+                <span class="solution-label">Arquitectura & Solución Técnica:</span>
+                <p>{{ project.solution }}</p>
+              </div>
+
+              <!-- Desglose Frontend vs Backend -->
+              @if (project.frontendStack && project.backendStack) {
+                <div class="stack-breakdown">
+                  <div class="stack-col">
+                    <span class="col-title">Frontend</span>
+                    <div class="mini-chips">
+                      @for (t of project.frontendStack; track t) {
+                        <span class="mini-chip">{{ t }}</span>
+                      }
+                    </div>
+                  </div>
+                  <div class="stack-col">
+                    <span class="col-title">Backend & Persistencia</span>
+                    <div class="mini-chips">
+                      @for (t of project.backendStack; track t) {
+                        <span class="mini-chip accent">{{ t }}</span>
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+
+              <!-- Puntos Clave de Ingeniería -->
+              <div class="highlights-box">
+                <span class="highlights-title">Puntos Clave de Implementación:</span>
+                <ul class="highlights-list">
+                  @for (hl of project.highlights; track hl) {
+                    <li>{{ hl }}</li>
+                  }
+                </ul>
+              </div>
+
+              <div class="card-footer">
+                @if (project.githubUrl) {
+                  <a [href]="project.githubUrl" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    <span>Ver Código en GitHub</span>
+                  </a>
+                }
+                @if (project.liveUrl) {
+                  <a [href]="project.liveUrl" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    <span>Ver Demo Online</span>
+                  </a>
+                }
+              </div>
+            </article>
+          } @empty {
+            <div class="empty-projects-state">
+              <p>No se encontraron proyectos en esta categoría.</p>
+              <button type="button" class="btn btn-secondary btn-sm" (click)="setProjectFilter('all')">
+                Ver todos los proyectos
+              </button>
+            </div>
+          }
+        </div>
+
+        <!-- APARTADO DE PROYECTOS PERSONALES, CREATIVOS & OCIO -->
+        <div class="personal-projects-block reveal">
+          <div class="personal-header">
+            <div>
+              <span class="eyebrow">Laboratorio & Ocio</span>
+              <h3>Proyectos Personales, Creativos & Experimentos</h3>
+              <p>Pequeños proyectos lúdicos, videojuegos retro y experimentos interactivos donde exploro diferentes lenguajes y dinámicas.</p>
+            </div>
+          </div>
+
+          <div class="personal-grid">
+            @for (item of personalProjects; track item.id) {
+              <article class="personal-card">
+                <div class="personal-top">
+                  <span class="personal-tag">{{ item.tag }}</span>
+                  <span class="personal-cat">{{ item.category }}</span>
+                </div>
+
+                <h4>{{ item.title }}</h4>
+                <p class="personal-desc">{{ item.description }}</p>
+
+                <div class="mini-chips">
+                  @for (st of item.stack; track st) {
+                    <span class="mini-chip">{{ st }}</span>
+                  }
+                </div>
+
+                <div class="personal-footer">
+                  <a [href]="item.githubUrl" target="_blank" rel="noopener noreferrer" class="personal-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    <span>Ver en GitHub &rarr;</span>
+                  </a>
+                </div>
+              </article>
+            }
+          </div>
+        </div>
+
+        <!-- Sección de Repositorios Públicos GitHub -->
+        <div class="github-repos-section reveal">
+          <div class="repos-header">
+            <div>
+              <h3>Actividad & Repositorios Públicos en GitHub</h3>
+              <p>Sincronización en vivo con la API oficial de GitHub (@martaprad)</p>
+            </div>
+            <a
+              href="https://github.com/martaprad?tab=repositories"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-ghost btn-sm"
+            >
+              <span>Ver todos los repositorios &rarr;</span>
+            </a>
+          </div>
+
+          @if (reposLoading()) {
+            <div class="repos-status">Cargando repositorios públicos...</div>
+          } @else if (reposError()) {
+            <div class="repos-status">
+              Consulta todos mis repositorios y contribuciones directamente en
+              <a href="https://github.com/martaprad" target="_blank" rel="noopener noreferrer">GitHub</a>.
+            </div>
+          } @else {
+            <div class="repos-grid">
+              @for (repo of githubRepos(); track repo.url) {
+                <div class="repo-card">
+                  <div class="repo-top">
+                    <a [href]="repo.url" target="_blank" rel="noopener noreferrer" class="repo-name">
+                      {{ repo.title }}
+                    </a>
+                    @if (repo.language) {
+                      <span class="repo-lang">{{ repo.language }}</span>
+                    }
+                  </div>
+                  <p class="repo-desc">{{ repo.description }}</p>
+                  <div class="repo-bottom">
+                    <a [href]="repo.url" target="_blank" rel="noopener noreferrer" class="repo-link">
+                      Explorar código &rarr;
+                    </a>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
       </div>
-      <div class="contact-links">
-        @for (link of contactLinks; track link.label) {
-          <a class="contact-link reveal" [href]="link.href" target="_blank" rel="noopener">
-            <span>{{ link.label }}</span>
-            <span class="contact-value">{{ link.value }}</span>
-          </a>
-        }
+    </section>
+
+    <!-- EXPERIENCIA PROFESIONAL -->
+    <section id="experience" class="section section-experience">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <span class="eyebrow">Trayectoria</span>
+          <h2>Experiencia Profesional</h2>
+          <p class="section-lead">
+            Combinación única de consultoría tecnológica, desarrollo web full stack, analítica de datos en la nube y más de 6 años de liderazgo operativo.
+          </p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-spine" aria-hidden="true"></div>
+
+          @for (item of experiences; track item.company) {
+            <div class="timeline-row reveal">
+              <div class="timeline-aside">
+                <span class="timeline-badge">{{ item.period }}</span>
+                <span class="timeline-type">{{ item.type }}</span>
+                <span class="timeline-loc">{{ item.location }}</span>
+              </div>
+
+              <div class="timeline-card">
+                <div class="card-meta">
+                  <h3>{{ item.role }}</h3>
+                  <span class="company-name">{{ item.company }}</span>
+                </div>
+
+                <p class="experience-summary">{{ item.summary }}</p>
+
+                <div class="achievements-box">
+                  <span class="achievements-title">Responsabilidades & Logros Técnicos:</span>
+                  <ul class="achievements-list">
+                    @for (ach of item.achievements; track ach) {
+                      <li>{{ ach }}</li>
+                    }
+                  </ul>
+                </div>
+
+                <div class="tech-row">
+                  @for (tech of item.technologies; track tech) {
+                    <span class="tech-pill">{{ tech }}</span>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- FORMACIÓN & APRENDIZAJE -->
+    <section id="education" class="section section-education">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <span class="eyebrow">Desarrollo Profesional</span>
+          <h2>Formación Oficial & Especialización</h2>
+          <p class="section-lead">
+            Base académica sólida con titulación oficial reglada en desarrollo de software y constante actualización técnica en el entorno laboral.
+          </p>
+        </div>
+
+        <div class="education-grid">
+          @for (edu of education; track edu.title) {
+            <article class="education-card reveal">
+              <span class="edu-period">{{ edu.period }}</span>
+              <h3>{{ edu.title }}</h3>
+              <span class="edu-inst">{{ edu.institution }}</span>
+              <p>{{ edu.description }}</p>
+              @if (edu.tags) {
+                <div class="mini-chips">
+                  @for (t of edu.tags; track t) {
+                    <span class="mini-chip">{{ t }}</span>
+                  }
+                </div>
+              }
+            </article>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contact" class="section section-contact">
+      <div class="section-inner contact-box reveal">
+        <div class="contact-header">
+          <span class="eyebrow">Contacto & Contratación</span>
+          <h2>¿Hablamos sobre cómo puedo aportar a tu equipo o proyecto?</h2>
+          <p class="section-lead">
+            Estoy disponible para incorporar mi experiencia como Full Stack Developer, combinando calidad técnica, visión de datos y capacidad demostrada de coordinación.
+          </p>
+        </div>
+
+        <div class="contact-actions-grid">
+          <div class="contact-action-card">
+            <span class="action-icon">✉️</span>
+            <h4>Email Profesional</h4>
+            <p>Escríbeme directamente para propuestas laborales o colaboraciones.</p>
+            <div class="email-copy-wrapper">
+              <a href="mailto:martapradi@gmail.com" class="btn btn-primary">
+                Enviar mensaje
+              </a>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="copyEmail('martapradi@gmail.com')"
+              >
+                {{ emailCopied() ? '✓ ¡Copiado!' : 'Copiar email' }}
+              </button>
+            </div>
+          </div>
+
+          <div class="contact-action-card">
+            <span class="action-icon">💼</span>
+            <h4>Conectemos en LinkedIn</h4>
+            <p>Consulta mi trayectoria detallada y validaciones profesionales.</p>
+            <a
+              href="https://www.linkedin.com/in/marta-pradillo"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-secondary"
+            >
+              <span>Ver perfil de LinkedIn &rarr;</span>
+            </a>
+          </div>
+
+          <div class="contact-action-card">
+            <span class="action-icon">💻</span>
+            <h4>Explora mi GitHub</h4>
+            <p>Revisa mis repositorios, contribuciones y proyectos de código abierto.</p>
+            <a
+              href="https://github.com/martaprad"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-ghost"
+            >
+              <span>Ir a GitHub (@martaprad) &rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <p>© 2026 Marta Pradillo Rodríguez • Desarrolladora Full Stack</p>
+      <div class="footer-links">
+        <a href="#top">Volver arriba &uarr;</a>
       </div>
     </div>
-  </section>
+  </footer>
 </div>
