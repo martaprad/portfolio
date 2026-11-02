@@ -17,17 +17,51 @@
         <a href="#contact" class="nav-cta" (click)="closeMobileNav()">Contactar</a>
       </nav>
 
-      <button
-        class="nav-toggle"
-        type="button"
-        (click)="toggleMobileNav()"
-        [attr.aria-expanded]="mobileNavOpen()"
-        aria-label="Abrir menú de navegación"
-      >
-        <span class="toggle-bar"></span>
-        <span class="toggle-bar"></span>
-        <span class="toggle-bar"></span>
-      </button>
+      <div class="nav-actions">
+        <!-- Pestaña / Botón de Traducción en Tiempo Real -->
+        <button
+          type="button"
+          class="lang-btn notranslate"
+          (click)="toggleLanguage()"
+          [attr.title]="currentLang() === 'es' ? 'Traducir página completa al inglés en tiempo real' : 'Traducir al español'"
+          [attr.aria-label]="currentLang() === 'es' ? 'Traducir página completa al inglés' : 'Traducir página al español'"
+        >
+          @if (currentLang() === 'es') {
+            <!-- Bandera de Inglaterra / Reino Unido -->
+            <svg class="flag-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="22" height="13" aria-hidden="true">
+              <clipPath id="uk-clip"><path d="M0,0 v30 h60 v-30 z"/></clipPath>
+              <clipPath id="uk-diag"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+              <g clip-path="url(#uk-clip)">
+                <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+                <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/>
+                <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#uk-diag)" stroke="#C8102E" stroke-width="4"/>
+                <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+                <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+              </g>
+            </svg>
+            <span class="lang-label">English</span>
+          } @else {
+            <!-- Bandera de España para retornar a español -->
+            <svg class="flag-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 500" width="22" height="14" aria-hidden="true">
+              <rect width="750" height="500" fill="#c60b1e"/>
+              <rect width="750" height="250" y="125" fill="#ffc400"/>
+            </svg>
+            <span class="lang-label">Español</span>
+          }
+        </button>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          (click)="toggleMobileNav()"
+          [attr.aria-expanded]="mobileNavOpen()"
+          aria-label="Abrir menú de navegación"
+        >
+          <span class="toggle-bar"></span>
+          <span class="toggle-bar"></span>
+          <span class="toggle-bar"></span>
+        </button>
+      </div>
     </div>
   </header>
 

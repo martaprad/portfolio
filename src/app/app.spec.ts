@@ -63,10 +63,38 @@ describe('App', () => {
     await fixture.whenStable();
 
     const cards = Array.from(compiled.querySelectorAll('.featured-card'));
-    console.log('Cards count after clicking frontend:', cards.length);
-    cards.forEach((c, idx) => console.log(`Card ${idx}:`, c.textContent?.slice(0, 80)));
     expect(cards.length).toBe(1);
     expect(cards[0].classList.contains('featured-card')).toBe(true);
     expect(cards[0].textContent).toContain('Interactive Portfolio');
+  });
+
+  it('should toggle language between es and en when toggleLanguage is called', () => {
+    const fixture = TestBed.createComponent(App);
+    const app = fixture.componentInstance;
+    expect(app['currentLang']()).toBe('es');
+
+    app['toggleLanguage']();
+    expect(app['currentLang']()).toBe('en');
+
+    app['toggleLanguage']();
+    expect(app['currentLang']()).toBe('es');
+  });
+
+  it('should render the UK flag language button in the navbar and toggle on click', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const langBtn = compiled.querySelector<HTMLButtonElement>('.lang-btn');
+    expect(langBtn).toBeTruthy();
+    expect(langBtn?.textContent).toContain('English');
+    expect(langBtn?.querySelector('svg.flag-icon')).toBeTruthy();
+
+    langBtn?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(langBtn?.textContent).toContain('Español');
   });
 });

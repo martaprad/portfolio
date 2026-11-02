@@ -54,6 +54,8 @@ export class App implements OnInit, AfterViewInit {
   protected readonly projectFilter = signal<string>('all');
   protected readonly emailCopied = signal<boolean>(false);
   protected readonly mobileNavOpen = signal<boolean>(false);
+  protected readonly currentLang = signal<'es' | 'en'>('es');
+  protected readonly isTranslating = signal<boolean>(false);
 
   // GitHub Repos dynamic state
   protected readonly githubRepos = signal<GithubRepoItem[]>([]);
@@ -76,6 +78,9 @@ export class App implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
+      if (document.cookie.includes('googtrans=/es/en')) {
+        this.currentLang.set('en');
+      }
       void this.loadGithubRepos();
     }
   }
@@ -83,6 +88,55 @@ export class App implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.initScrollReveal();
+    }
+  }
+
+  protected toggleLanguage(): void {
+    const target = this.currentLang() === 'es' ? 'en' : 'es';
+    this.translatePage(target);
+  }
+
+  private translatePage(targetLang: 'es' | 'en'): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    this.isTranslating.set(true);
+    this.currentLang.set(targetLang);
+
+    // Configurar la cookie requerida por Google Website Translator
+    document.cookie = `googtrans=/es/${targetLang}; path=/;`;
+    if (window.location.hostname) {
+      document.cookie = `googtrans=/es/${targetLang}; path=/; domain=${window.location.hostname};`;
+    }
+
+    if (targetLang === 'es') {
+      document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      if (window.location.hostname) {
+        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname};`;
+      }
+    }
+
+    const triggerSelect = (): boolean => {
+      const select = document.querySelector<HTMLSelectElement>('.goog-te-combo');
+      if (select) {
+        select.value = targetLang;
+        select.dispatchEvent(new Event('change'));
+        this.isTranslating.set(false);
+        return true;
+      }
+      return false;
+    };
+
+    if (!triggerSelect()) {
+      let attempts = 0;
+      const interval = setInterval(() => {
+        attempts++;
+        if (triggerSelect() || attempts > 25) {
+          clearInterval(interval);
+          this.isTranslating.set(false);
+        }
+      }, 120);
     }
   }
 

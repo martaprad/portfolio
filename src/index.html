@@ -13,6 +13,23 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon-mp.svg?v=2">
 </head>
 <body>
+  <!-- Contenedor oculto para la API de traducción en tiempo real de Google -->
+  <div id="google_translate_element" style="display:none"></div>
+
   <app-root></app-root>
+
+  <!-- Inicializador del traductor web en tiempo real -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      if (window.google && window.google.translate) {
+        new window.google.translate.TranslateElement({
+          pageLanguage: 'es',
+          includedLanguages: 'en,es',
+          autoDisplay: false
+        }, 'google_translate_element');
+      }
+    }
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
